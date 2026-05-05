@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Running Shoes",
+        "category": "sports"
+    },
+    {
+        "id": 2,
+        "name": "Laptop",
+        "category": "electronics"
+    },
+    {
+        "id": 3,
+        "name": "T-shirt",
+        "category": "clothing"
+    }
+]
