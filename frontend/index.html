@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sales Assistant for E-commerce</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background: #f5f7fb;
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+
+    <div class="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl flex flex-col h-[80vh]">
+
+        <!-- Header -->
+        <div class="p-4 border-b font-semibold text-lg">
+            AI Sales Assistant for E-commerce
+        </div>
+
+        <!-- Chat Area -->
+        <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+
+        <!-- Recommendations -->
+        <div class="p-4 border-t">
+            <h3 class="font-semibold mb-2">Recommended Products</h3>
+            <div id="recommendations" class="flex gap-2 flex-wrap"></div>
+        </div>
+
+        <!-- Input -->
+        <div class="p-4 border-t flex gap-2">
+            <input id="chat-input" type="text" placeholder="e.g. I want shoes for gym"
+                class="flex-1 border rounded-lg px-3 py-2 outline-none" />
+            <button id="send-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                Send
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const input = document.getElementById("chat-input");
+        const button = document.getElementById("send-button");
+        const chatHistory = document.getElementById("chat-history");
+        const recommendationsDiv = document.getElementById("recommendations");
+
+        button.addEventListener("click", sendMessage);
+
+        async function sendMessage() {
+            const message = input.value.trim();
+            if (!message) return;
+
+            // User message
+            const userMsg = document.createElement("div");
+            userMsg.className = "text-right";
+            userMsg.innerHTML = `<div class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg">${message}</div>`;
+            chatHistory.appendChild(userMsg);
+
+            input.value = "";
+
+            try {
+                const res = await fetch("http://127.0.0.1:8000/chat/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await res.json();
+
+                // AI response
+                const aiMsg = document.createElement("div");
+                aiMsg.className = "text-left";
+                aiMsg.innerHTML = `<div class="inline-block bg-gray-200 px-4 py-2 rounded-lg">${data.response}</div>`;
+                chatHistory.appendChild(aiMsg);
+
+                // Recommendations
+                recommendationsDiv.innerHTML = "";
+
+                data.recommendations.forEach(item => {
+                    const card = document.createElement("div");
+                    card.className = "bg-gray-100 px-3 py-2 rounded-lg";
+
+                    card.innerText = item.name || item;
+
+                    recommendationsDiv.appendChild(card);
+                });
+
+                // Auto scroll
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
