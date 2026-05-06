@@ -6,19 +6,47 @@ def recommend_products(query: str):
 
     query = query.lower()
 
-    keywords = {
-    "sports": ["sports", "gym", "fitness", "exercise", "shoes", "running"],
-    "electronics": ["laptop", "computer", "tech"],
-    "clothing": ["shirt", "tshirt", "clothes"]
-}
+    # ❗ remove useless words
+    stopwords = {"for", "the", "and", "i", "want", "need", "something"}
+    query_words = [word for word in query.split() if word not in stopwords]
 
-    results = []
+    keywords = {
+        "sports": ["sports", "gym", "fitness", "exercise", "shoes", "running"],
+        "electronics": ["laptop", "computer", "tech", "headphones", "mobile"],
+        "clothing": ["shirt", "tshirt", "clothes", "jeans", "jacket"],
+        "accessories": ["watch", "bag", "backpack"],
+        "furniture": ["chair", "table", "desk"]
+    }
+
+    scored_products = []
 
     for product in products:
+        name = product["name"].lower()
         category = product["category"]
 
-        if category in keywords:
-            if any(word in query for word in keywords[category]):
-                results.append(product)
+        score = 0
 
-    return results
+        # ✅ match with product name
+        for word in query_words:
+            if word in name:
+                score += 2
+
+        # ✅ match with category keywords
+        if category in keywords:
+            for word in query_words:
+                if word in keywords[category]:
+                    score += 1
+
+        if score > 0:
+            scored_products.append((score, product))
+
+    # ✅ sort by relevance
+    scored_products.sort(reverse=True, key=lambda x: x[0])
+
+    results = [p for _, p in scored_products]
+
+    # ✅ fallback
+    if not results:
+        results = products[:4]
+
+    return results[:4]

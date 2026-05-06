@@ -1,17 +1,67 @@
 [
     {
-        "id": 1,
-        "name": "Running Shoes",
-        "category": "sports"
+        "name": "Nike Running Shoes",
+        "category": "sports",
+        "price": "$120"
     },
     {
-        "id": 2,
-        "name": "Laptop",
-        "category": "electronics"
+        "name": "Adidas Gym Trainer",
+        "category": "sports",
+        "price": "$95"
     },
     {
-        "id": 3,
-        "name": "T-shirt",
-        "category": "clothing"
+        "name": "Puma Sports Sneakers",
+        "category": "sports",
+        "price": "$85"
+    },
+    {
+        "name": "Wireless Bluetooth Headphones",
+        "category": "electronics",
+        "price": "$60"
+    },
+    {
+        "name": "Smart Watch Series 5",
+        "category": "electronics",
+        "price": "$150"
+    },
+    {
+        "name": "Gaming Laptop Pro",
+        "category": "electronics",
+        "price": "$1200"
+    },
+    {
+        "name": "Casual Cotton T-Shirt",
+        "category": "clothing",
+        "price": "$25"
+    },
+    {
+        "name": "Denim Jeans",
+        "category": "clothing",
+        "price": "$50"
+    },
+    {
+        "name": "Winter Jacket",
+        "category": "clothing",
+        "price": "$120"
+    },
+    {
+        "name": "Laptop Backpack",
+        "category": "accessories",
+        "price": "$40"
+    },
+    {
+        "name": "Leather Office Bag",
+        "category": "accessories",
+        "price": "$70"
+    },
+    {
+        "name": "Ergonomic Office Chair",
+        "category": "furniture",
+        "price": "$200"
+    },
+    {
+        "name": "Wooden Study Table",
+        "category": "furniture",
+        "price": "$300"
     }
 ]
